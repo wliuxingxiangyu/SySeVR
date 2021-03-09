@@ -2,13 +2,49 @@ Environment:
 joern 0.3.1, neo4j 2.1.5, python 3.6, tensorflow 1.6, gensim 3.4
 
 Step 1: Generating slices (i.e., SeVCs)
+`
 (1) Use joern to parse source code: the input is source code files, and the output is a file named .joernIndex.
+joern(-core)主要用来进行代码的解析以及以代码属性图形式进行存储。
+~/ws/other/0vul/joern/$ wget https://github.com/fabsx00/joern/archive/0.3.1.tar.gz
+~/ws/other/0vul/joern/$ tar xfzv 0.3.1.tar.gz
+~/ws/other/0vul/joern/$ cd joern-0.3.1
+~/ws/other/0vul/joern/joern-0.3.1$ ant
+~/ws/other/0vul/joern/joern-0.3.1/bin$ java -version
+java version "1.7.0_80"
+~/ws/other/0vul/joern/joern-0.3.1/bin$ java -jar joern.jar $CodeDirectory
+代码属性图 存入 数据库 ~/ws/other/0vul/joern/joern-0.3.1/.joernIndex
+
+neo4j-community-2.1.8图形数据库管理界面。
+aw "http://neo4j.com/artifact.php?name=neo4j-community-2.1.8-unix.tar.gz"
+tar -zxvf neo4j-community-2.1.8-unix.tar.gz
+
+~/ws/other/0vul/neo4j-community-2.1.8/bin$ ./neo4j status
+~/ws/other/0vul/neo4j-community-2.1.8/bin$ ./neo4j start-no-wait
+`
 
 (2) get_cfg_relation.py: This file is used to get CFG graphs of functions using joern tool. The input is output of the first step, and the outputs are stored with folders in cfg_db. 
+~/ws/other/0vul/SySeVR$ mkdir cfg_db
+~/ws/other/0vul/SySeVR$ cd cfg_db
+~/ws/other/0vul/SySeVR$ mkdir testCode
+~/ws/other/0vul/SySeVR$ py2 Implementation/source2slice/get_cfg_relation.py
 
 (3) complete_PDG.py: This file is used to get PDG graph of functions. The inputs are files in cfg_db, and the outputs are stored with folders in pdg_db.
+~/ws/other/0vul/SySeVR$ mkdir pdg_db
+~/ws/other/0vul/SySeVR$ cd pdg_db
+~/ws/other/0vul/SySeVR$ mkdir testCode
+~/ws/other/0vul/SySeVR$ py2 Implementation/source2slice/complete_PDG.py
 
 (4) access_db_operate.py: This file is used to get the call graph of functions. The inputs are files in pdg_db, and the outputs are stored with folders in dict_call2cfgNodeID_funcID.
+~/ws/other/0vul/SySeVR$ py2 Implementation/source2slice/access_db_operate.py
+
+['testCode']
+hz-, access_db_operate.py, list_all_func_node=False
+Traceback (most recent call last):
+  File "Implementation/source2slice/access_db_operate.py", line 705, in <module>
+    call_g = getCallGraph(j, testID)
+  File "Implementation/source2slice/access_db_operate.py", line 520, in getCallGraph
+    for func_node in list_all_func_node:
+TypeError: 'bool' object is not iterable
 
 (5) points_get.py: This file is used to get four kinds of SyVCs. The inputs are files in dict_call2cfgNodeID_funcID, and the outputs are four kinds of SyVCs.
 

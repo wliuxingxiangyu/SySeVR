@@ -510,7 +510,7 @@ def get_all_iddecl_node(db, testID):
 
 def getCallGraph(db, testID):
     list_all_func_node = getFuncNodeInTestID(db, testID)
-    print("hz-, " + os.path.basename(__file__)+", list_all_func_node="+str(list_all_func_node)) # hz- debug..list_all_func_node = False ?
+    print("hz-, " + os.path.basename(__file__)+", list_all_func_node="+str(list_all_func_node)) # hz- 2021.3.9 debug..list_all_func_node = False ?
     #print "list_all_func_node", list_all_func_node
     if list_all_func_node == []:
         return False
@@ -691,6 +691,7 @@ if __name__ == '__main__':
     j = JoernSteps()
     j.connectToDatabase()
 
+    # pdg_db_path = hzutil.parent_dir + "pdg_db"
     pdg_db_path = "pdg_db"
     list_testID = os.listdir(pdg_db_path)
     print list_testID
