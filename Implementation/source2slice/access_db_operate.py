@@ -141,7 +141,7 @@ def getFuncNode(db, func_name):
 def getFuncFile(db, func_id):
     query_str = "g.v(%d).in('IS_FILE_OF').filepath" % func_id
     ret = db.runGremlinQuery(query_str)
-    print ret
+    print("hz- getFuncFile() ret"+str(ret))
     return ret[0]
 
 
@@ -510,6 +510,7 @@ def get_all_iddecl_node(db, testID):
 
 def getCallGraph(db, testID):
     list_all_func_node = getFuncNodeInTestID(db, testID)
+    print("hz-, " + os.path.basename(__file__)+", list_all_func_node="+str(list_all_func_node)) # hz- debug..list_all_func_node = False ?
     #print "list_all_func_node", list_all_func_node
     if list_all_func_node == []:
         return False

@@ -268,9 +268,11 @@ def main():
     j = JoernSteps()
     j.connectToDatabase()
     all_func_node = getALLFuncNode(j)
+    print("hz-, " + os.path.basename(__file__)+", all_func_node="+str(all_func_node))
     for node in all_func_node:
         testID = getFuncFile(j, node._id).split('/')[-2]
         path = os.path.join("cfg_db", testID)
+        print("hz-  "+os.path.basename(__file__)+",path="+path)
 
         store_file_name = node.properties['name'] + '_' + str(node._id)
         store_path = os.path.join(path, store_file_name)
